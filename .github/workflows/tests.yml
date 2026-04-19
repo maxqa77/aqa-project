@@ -80,17 +80,8 @@ jobs:
           name: allure-results
           path: allure-results
 
-      - name: Install Java
-        run: sudo apt-get update && sudo apt-get install -y openjdk-11-jre
-
-      - name: Install Allure
-        run: |
-          wget https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.0.tgz
-          tar -xzf allure-2.27.0.tgz
-          sudo mv allure-2.27.0 /opt/allure
-          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-
-      - name: Generate report
-        run: |
-          mkdir -p allure-report
-          allure generate allure-results -o allure-report || true
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@v1.7
+        with:
+          allure_results: allure-results
+          allure_report: allure-report
