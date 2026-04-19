@@ -6,7 +6,7 @@ from api.client import APIClient
 @allure.feature("ВАЛЕРА")
 @allure.story("Хватит Дрыхнуть")
 @allure.title("ВАЛЕРА или ЛЕРА?")
-@allure.description("API должен вернуть список постов со статусом 200")
+@allure.description("ВАЛЕРА или ЛЕРА?")
 
 @pytest.mark.api
 def test_get_posts(base_url):
@@ -14,7 +14,7 @@ def test_get_posts(base_url):
     with allure.step("ВАЛЕРА"):
         client = APIClient(base_url)
 
-    with allure.step("Отправляем запрос GET /posts"):
+    with allure.step("ВАЛЕРА или ЛЕРА?"):
         response = client.get_posts()
 
     with allure.step("Проверяем статус код 200"):
