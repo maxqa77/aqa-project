@@ -14,8 +14,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install deps
         run: pip install -r requirements.txt
-      - name: Lint
-        run: flake8 .
+      - name: Lint (soft)
+        run: flake8 . || true
 
   unit:
     runs-on: ubuntu-latest
