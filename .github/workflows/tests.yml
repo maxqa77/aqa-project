@@ -80,8 +80,22 @@ jobs:
           name: allure-results
           path: allure-results
 
-      - name: Generate Allure report
-        uses: simple-elf/allure-report-action@v1.7
+      - name: Install Java
+        run: sudo apt-get update && sudo apt-get install -y openjdk-11-jre
+
+      - name: Install Allure
+        run: |
+          wget https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.24.0/allure-commandline-2.24.0.tgz
+          tar -xzf allure-commandline-2.24.0.tgz
+          sudo mv allure-2.24.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+
+      - name: Generate report
+        run: |
+          allure generate allure-results -o allure-report || true
+
+      - name: Upload report
+        uses: actions/upload-artifact@v4
         with:
-          allure_results: allure-results
-          allure_report: allure-report
+          name: allure-report
+          path: allure-report
