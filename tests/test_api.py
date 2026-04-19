@@ -5,7 +5,7 @@ from api.client import APIClient
 
 @allure.feature("ВАЛЕРА")
 @allure.story("Хватит Дрыхнуть")
-@allure.title("📄 Проверка получения списка постов (200 OK)")
+@allure.title("ВАЛЕРА или ЛЕРА?")
 @allure.description("API должен вернуть список постов со статусом 200")
 
 @pytest.mark.api
