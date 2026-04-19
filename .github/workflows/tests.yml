@@ -65,7 +65,9 @@ jobs:
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
       - name: Generate Allure report
-        run: allure generate allure-results -o allure-report
+        run: |
+            mkdir -p allure-results
+            allure generate allure-results -o allure-report
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
