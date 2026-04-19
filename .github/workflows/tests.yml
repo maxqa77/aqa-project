@@ -56,16 +56,16 @@ jobs:
       - name: Run API tests
         run: pytest -m api --alluredir=allure-results
 
+      - name: Ensure results exist
+        run: |
+          mkdir -p allure-results
+          echo "ok" > allure-results/dummy.txt
+
       - name: Upload allure results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: allure-results
-
-      - name: Ensure results exist
-        run: |
-          mkdir -p allure-results
-          echo "ok" > allure-results/dummy.txt
 
   report:
     runs-on: ubuntu-latest
