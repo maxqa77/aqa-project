@@ -4,6 +4,15 @@ on:
   push:
   pull_request:
   workflow_dispatch:
+    inputs:
+      test_type:
+        description: "Тип тестов (api / unit / all)"
+        required: true
+        default: "api"
+      env:
+        description: "Окружение (dev / stage)"
+        required: true
+        default: "dev"
 
 jobs:
   lint:
@@ -122,3 +131,30 @@ jobs:
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4
+
+  manual:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install deps
+        run: pip install -r requirements.txt
+
+      - name: Run selected tests
+        run: |
+          echo "ENV=${{ github.event.inputs.env }}"
+        
+          if [ "${{ github.event.inputs.test_type }}" = "api" ]; then
+            pytest -m api --alluredir=allure-results
+          elif [ "${{ github.event.inputs.test_type }}" = "unit" ]; then
+            pytest -m unit --alluredir=allure-results
+          else
+            pytest --alluredir=allure-results
+          fi
